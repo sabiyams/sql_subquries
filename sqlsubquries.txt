@@ -1,0 +1,71 @@
+table name:students
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    score INT
+);
+INSERT INTO students (student_id, name, score) VALUES
+(1, 'Ravi', 85),
+(2, 'Priya', 72),
+(3, 'Anita', 90),
+(4, 'Suresh', 60),
+(5, 'Meena', 78);
+
+task:Find the names of all students who scored more than the average score of all students.
+
+ans:SELECT name,score
+   FROM students
+   WHERE score>(SELECT AVG(score) FROM students);
+-------------------------------------------------------------------------------------------------
+
+table name:employees
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    salary INT
+);
+INSERT INTO employees (emp_id, name, salary) VALUES
+(1, 'Ravi', 50000),
+(2, 'Priya', 30000),
+(3, 'Anita', 70000),
+(4, 'Suresh', 30000),
+(5, 'Meena', 45000);
+
+task:Find the names and salary of employees who earn more than the minimum salary in the company.
+
+ans:SELECT name,salary
+    FROM employees
+    WHERE salary>(SELECT MIN(salary) FROM employees);
+--------------------------------------------------------------------------------------------------
+table name1:employee
+
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    dept_id INT
+);
+INSERT INTO employee (emp_id, name, dept_id) VALUES
+(1, 'Ravi', 10),
+(2, 'Priya', 20),
+(3, 'Anita', 10),
+(4, 'Suresh', 30),
+(5, 'Meena', 20);
+
+table name2:departments
+
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+INSERT INTO departments (dept_id, dept_name) VALUES
+(10, 'Sales'),
+(20, 'HR'),
+(30, 'Finance');
+
+task:Find the names of all employees who work in the 'Sales' department.
+
+ans:SELECT name
+    FROM employee AS e
+    WHERE e.dept_id=(SELECT dept_id FROM departments WHERE dept_name='Sales');
