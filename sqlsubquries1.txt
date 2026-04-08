@@ -1,0 +1,71 @@
+Input Table: Employees
+
+---------------------------------------
+| emp_id | name    | salary | dept_id |
+| :---   | :---    | :---   | :---    |
+| 1      | Alice   | 70000  | 10      |
+| 2      | Bob     | 50000  | 10      |
+| 3      | Charlie | 90000  | 20      |
+| 4      | David   | 45000  | 20      |
+| 5      | Eve     | 65000  | 10      |
+---------------------------------------
+
+task:Identify high-earners. Find the names and salaries of all 
+employees who earn more than the average salary across the entire company.
+
+ans://outer query
+       SELECT name,salary 
+       FROM Employees
+       WHERE salary> //inner query
+                     (SELECT AVG(salary) FROM Employees);
+
+-------------------------------------------------------------------------------------
+question2:
+Input Table: Customers
+
+-----------------------
+| cust_id | cust_name |
+| :------ | :-------- |
+| 101     | TechCorp  |
+| 102     | BioHealth |
+| 103     | NanoLabs  |
+-----------------------
+
+Input Table: Orders
+
+-------------------------------
+| order_id | cust_id | amount |
+| :------- | :------ | :----- |
+| 1        | 101     | 500    |
+| 2        | 101     | 300    |
+| 3        | 103     | 1200   |
+-------------------------------
+
+task:Use a multiple-row subquery (IN or NOT IN). 
+Find the names of customers who have never placed an order.
+
+ans:SELECT cust_name 
+    FROM Cust
+    WHERE cust_id NOT IN (SELECT cust_id FROM OD);
+--------------------------------------------------------------------------
+question3:
+
+Input Table: Employees
+
+----------------------------------------
+| emp_id | name    | salary | dept_id |
+| :----- | :------ | :----- | :------ |
+| 1      | Alice   | 80000  | 10      |
+| 2      | Bob     | 40000  | 10      |
+| 3      | Charlie | 90000  | 20      |
+| 4      | David   | 85000  | 20      |
+----------------------------------------
+
+task:This one is trickier. Find the names of employees 
+who earn more than the average salary of their own specific department.
+
+ans:SELECT e1.name,e1.salary
+    FROM Employees AS e1
+    WHERE e1.salary>(SELECT AVG(salary) 
+                      FROM Employees AS e2
+                      WHERE e1.dept_id=e2.dept_id);
