@@ -1,0 +1,94 @@
+Question1:
+
+employees
+┌────┬───────┬────
+│ id │ name  │ salary │
+├────┼───────┼─── |
+│ 1  │ Ram   │ 50000  │
+│ 2  │ Raj   │ 65000  │
+│ 3  │ Priya │ 70000  │
+│ 4  │ Kumar │ 55000  │
+└────┴───────┴─── ┘
+
+task:"Find the employee who has the maximum salary"
+
+ans:SELECT *
+    FROM employees
+    WEHRE salary=(SELECT MAX(salary) FROM employees);
+------------------------------------------------------------------
+Questio2:
+
+products
+┌───────┬──────────┬─ ┐
+│ id    │ name     │ price │
+├───────┼──────────┼─ ┤
+│ 101   │ Laptop   │ 55000 │
+│ 102   │ Mouse    │ 500   │
+│ 103   │ Keyboard │ 1500  │
+│ 104   │ Monitor  │ 8000  │
+│ 105   │ Speaker  │ 3000  │
+└───────┴──────────┴─┘
+
+TASK:"Find products that are priced above the average price"
+ANS:SELECT *
+    FROM products
+    WHERE price>(SELECT AVG(price) FROM products);
+-------------------------------------------------------------------------------
+Question3:
+
+employees                           departments
+┌──────┬────────┬────┐       ┌─────────────┬──────────────┬──┐
+│ id   │ name   │ dept_id │        │ dept_id     │ dept_name    │ location │
+├──────┼────────┼────┤       ├─────────────┼──────────────┼──┤
+│ 1    │ Ram    │ 10      │        │ 10          │ IT           │ New York │
+│ 2    │ Raj    │ 20      │        │ 20          │ HR           │ Boston   │
+│ 3    │ Priya  │ 10      │        │ 30          │ Sales        │ New York │
+│ 4    │ Kumar  │ 30      │        │ 40          │ Finance      │ Chicago  │
+│ 5    │ Sita   │ 40      │       └─────────────┴──────────────┴──┘
+└──────┴────────┴────┘
+
+TASK:Find employees who work in departments located in 'New York'"
+ANS:SELECT *
+    FROM Employees
+    WHERE dept_id IN (SELECT dept_id
+                      FROM Departments AS d
+                      WHERE location='New York');
+-------------------------------------------------------------------------------------
+Question4:
+
+customers                           orders
+┌─────────────┬──────┐       ┌──────────┬────────┐
+│ customer_id │ name       │       │ order_id │ customer_id │
+├─────────────┼──────┤       ├──────────┼────────┤
+│ 101         │ Ram        │       │ 1001     │ 101         │
+│ 102         │ Raj        │       │ 1002     │ 103         │
+│ 103         │ Priya      │       │ 1003     │ 101         │
+│ 104         │ Kumar      │       └──────────┴─────── ┘
+│ 105         │ Sita       │
+└─────────────┴──────┘
+
+TASK:Find customers who have never placed an order
+ANS:SELECT *
+    FROM customers
+    WHERE customer_id NOT IN (SELECT customer_id FROM orders);
+-----------------------------------------------------------------------------------------
+Question5:
+
+employees
+┌──────┬───────┬────────┬──┐
+│ id   │ name  │ salary │ dept_id │
+├──────┼───────┼────────┼──┤
+│ 1    │ Ram   │ 60000  │ 10      │
+│ 2    │ Raj   │ 55000  │ 10      │
+│ 3    │ Priya │ 90000  │ 20      │
+│ 4    │ Kumar │ 50000  │ 20      │
+│ 5    │ Sita  │ 75000  │ 30      │
+│ 6    │ Ravi  │ 70000  │ 30      │
+└──────┴───────┴────────┴──┘
+
+TASK:"Find employees who earn more than the average salary of their department"
+ANS:SELECT *
+    FROM employees AS e1
+    WHERE salary>(SELECT AVG(salary) 
+                  FROM employees AS e2
+                  WHERE e1.dept_id=e2.dept_id);
